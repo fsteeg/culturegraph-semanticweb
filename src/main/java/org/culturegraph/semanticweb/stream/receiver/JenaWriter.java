@@ -1,4 +1,4 @@
-package org.culturegraph.semanticweb;
+package org.culturegraph.semanticweb.stream.receiver;
 
 import java.util.Map;
 

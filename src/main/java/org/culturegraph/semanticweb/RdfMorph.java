@@ -7,7 +7,8 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 import org.culturegraph.metamorph.stream.readers.MultiFormatReader;
-import org.culturegraph.semanticweb.JenaWriter.BatchFinishedListener;
+import org.culturegraph.semanticweb.stream.receiver.JenaWriter;
+import org.culturegraph.semanticweb.stream.receiver.JenaWriter.BatchFinishedListener;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
