@@ -3,7 +3,7 @@ package org.culturegraph.semanticweb.stream.receiver;
 import java.util.Map;
 
 import org.culturegraph.metamorph.core.MetamorphException;
-import org.culturegraph.metamorph.core.MultiMapProvider;
+import org.culturegraph.metamorph.multimap.MultiMapProvider;
 import org.culturegraph.metamorph.stream.StreamReceiver;
 
 import com.hp.hpl.jena.rdf.model.Model;
