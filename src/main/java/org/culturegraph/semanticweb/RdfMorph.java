@@ -36,7 +36,7 @@ public final class RdfMorph implements BatchFinishedListener {
 	private void morph(final String fileName) throws IOException {
 
 		reader.setFormat(getExtention(fileName));
-		reader.setStreamReceiver(jenaWriter);
+		reader.setReceiver(jenaWriter);
 		jenaWriter.configure(reader.getMetamorph());
 		reader.read(new FileInputStream(fileName));
 		onBatchFinished(jenaWriter.getModel());
