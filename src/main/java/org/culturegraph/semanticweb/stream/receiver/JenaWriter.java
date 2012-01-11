@@ -3,7 +3,7 @@ package org.culturegraph.semanticweb.stream.receiver;
 import java.util.Map;
 
 import org.culturegraph.metamorph.core.MetamorphException;
-import org.culturegraph.metamorph.multimap.MultiMapProvider;
+import org.culturegraph.metamorph.multimap.SimpleMultiMap;
 import org.culturegraph.metamorph.stream.StreamReceiver;
 
 import com.hp.hpl.jena.rdf.model.Model;
@@ -28,7 +28,7 @@ public final class JenaWriter implements StreamReceiver {
 	private long count;
 	private BatchFinishedListener batchFinishedListener;
 	private Resource blankNode;
-	private MultiMapProvider multiMapProvider;
+	private SimpleMultiMap multiMapProvider;
 	private String homePrefix;
 	
 	public JenaWriter() {
@@ -40,7 +40,7 @@ public final class JenaWriter implements StreamReceiver {
 		this.model = model;
 	}
 	
-	public void configure(final MultiMapProvider multiMapProvider){
+	public void configure(final SimpleMultiMap multiMapProvider){
 		final Map<String, String> namespaces = multiMapProvider.getMap(NAMESPACES_CONF);
 		if(namespaces==null){
 			throw new MetamorphException("namespaces map is missing");
