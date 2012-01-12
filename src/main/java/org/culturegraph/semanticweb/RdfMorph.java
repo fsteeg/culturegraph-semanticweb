@@ -1,13 +1,14 @@
 package org.culturegraph.semanticweb;
 
-import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 import org.culturegraph.metamorph.stream.readers.MultiFormatReader;
-import org.culturegraph.semanticweb.JenaWriter.BatchFinishedListener;
+import org.culturegraph.semanticweb.stream.receiver.JenaWriter;
+import org.culturegraph.semanticweb.stream.receiver.JenaWriter.BatchFinishedListener;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
@@ -35,9 +36,9 @@ public final class RdfMorph implements BatchFinishedListener {
 	private void morph(final String fileName) throws IOException {
 
 		reader.setFormat(getExtention(fileName));
-		reader.setStreamReceiver(jenaWriter);
+		reader.setReceiver(jenaWriter);
 		jenaWriter.configure(reader.getMetamorph());
-		reader.read(new FileInputStream(fileName));
+		reader.read(new FileReader(fileName));
 		onBatchFinished(jenaWriter.getModel());
 	}
 
