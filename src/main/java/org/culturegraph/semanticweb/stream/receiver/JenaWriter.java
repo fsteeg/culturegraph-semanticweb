@@ -2,7 +2,7 @@ package org.culturegraph.semanticweb.stream.receiver;
 
 import java.util.Map;
 
-import org.culturegraph.metamorph.core.MetamorphException;
+import org.culturegraph.metamorph.core.exceptions.MetamorphException;
 import org.culturegraph.metamorph.multimap.SimpleMultiMap;
 import org.culturegraph.metamorph.stream.StreamReceiver;
 
