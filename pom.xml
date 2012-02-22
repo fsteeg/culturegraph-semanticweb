@@ -4,7 +4,9 @@
 	<groupId>org.culturegraph</groupId>
 	<artifactId>semanticweb</artifactId>
 
+
 	<version>0.3-SNAPSHOT</version>
+
 
 
 	<properties>
@@ -19,7 +21,9 @@
 			<groupId>org.culturegraph</groupId>
 			<artifactId>metamorph</artifactId>
 
+
 			<version>1.1-SNAPSHOT</version>
+
 
 		</dependency>
 		<dependency>
