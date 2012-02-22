@@ -2,7 +2,7 @@ package org.culturegraph.semanticweb.stream.receiver;
 
 import java.util.Map;
 
-import org.culturegraph.metamorph.core.MetamorphException;
+import org.culturegraph.metamorph.core.exceptions.MetamorphException;
 import org.culturegraph.metamorph.multimap.SimpleMultiMap;
 import org.culturegraph.metamorph.stream.StreamReceiver;
 
@@ -10,6 +10,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.Seq;
 
 /**
  * This is unfinished code!
@@ -19,6 +20,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
  */
 public final class JenaWriter implements StreamReceiver {
 	public static final String NAMESPACES_CONF = "namespaces";
+	public static final String LISTELEMENTS_CONF = "listelements";
 	public static final int DEFAULT_BATCH_SIZE = 1000;
 	
 	private static final String HTTP = "http://";
@@ -76,8 +78,13 @@ public final class JenaWriter implements StreamReceiver {
 
 	@Override
 	public void startEntity(final String name) {
-		blankNode = model.createResource();
-		currentResource.addProperty(createProperty(name), blankNode);
+		if (multiMapProvider.getMap(LISTELEMENTS_CONF).keySet().contains(name)) {
+			blankNode = model.createSeq();
+			currentResource.addProperty(createProperty(name), blankNode);
+		} else {
+			blankNode = model.createResource();
+			currentResource.addProperty(createProperty(name), blankNode);
+		}
 	}
 
 	@Override
@@ -87,18 +94,29 @@ public final class JenaWriter implements StreamReceiver {
 
 	@Override
 	public void literal(final String name, final String value) {
-		if(blankNode==null){
-			addProperty(currentResource, name, value);
-		}else{
-			addProperty(blankNode, name, value);
-		}
-	}
-
-	private void addProperty(final Resource resource, final String name, final String value) {
 		if(value.startsWith(HTTP)){
-			resource.addProperty(createProperty(name), model.createResource(value));
-		}else{
-			resource.addProperty(createProperty(name), value);
+			/*
+			 * value is a reference to a rdf:resource
+			 */
+			Resource resourceValue = model.createResource(value);
+			if(blankNode==null){
+				currentResource.addProperty(createProperty(name), resourceValue);
+			} else if (blankNode instanceof Seq) {
+				((Seq)blankNode).add(resourceValue);
+			} else {
+				blankNode.addProperty(createProperty(name), resourceValue);
+			}
+		} else {
+			/*
+			 * value is a literal
+			 */
+			if(blankNode==null){
+				currentResource.addProperty(createProperty(name), value);
+			} else if (blankNode instanceof Seq) {
+				((Seq)blankNode).add(value);
+			} else {
+				blankNode.addProperty(createProperty(name), value);
+			}
 		}
 	}
 	

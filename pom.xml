@@ -3,7 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.culturegraph</groupId>
 	<artifactId>semanticweb</artifactId>
-	<version>0.2</version>
+
+
+	<version>0.3</version>
+
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,7 +20,11 @@
 		<dependency>
 			<groupId>org.culturegraph</groupId>
 			<artifactId>metamorph</artifactId>
-			<version>0.3</version>
+
+
+			<version>1.0</version>
+
+
 		</dependency>
 		<dependency>
 			<groupId>com.hp.hpl.jena</groupId>
