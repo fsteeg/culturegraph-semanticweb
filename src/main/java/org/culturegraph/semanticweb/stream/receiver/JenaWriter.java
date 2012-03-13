@@ -33,16 +33,44 @@ public final class JenaWriter implements StreamReceiver {
 	private SimpleMultiMap multiMapProvider;
 	private String homePrefix;
 	
+	/**
+	 * @deprecated use constructor with SimpleMultiMap!
+	 */
+	@Deprecated
 	public JenaWriter() {
 		model = ModelFactory.createDefaultModel();
 	}
 	
-	
+	/**
+	 * @param model
+	 * @deprecated use constructor with SimpleMultiMap!
+	 */
+	@Deprecated
 	public JenaWriter(final Model model) {
 		this.model = model;
 	}
 	
+	public JenaWriter(final SimpleMultiMap multiMapProvider) {
+		model = ModelFactory.createDefaultModel();
+		setConfig(multiMapProvider);
+	}
+	
+	
+	public JenaWriter(final Model model, final SimpleMultiMap multiMapProvider) {
+		this.model = model;
+		setConfig(multiMapProvider);
+	}
+	
+	/**
+	 * @param multiMapProvider
+	 * @deprecated use constructor instead!
+	 */
+	@Deprecated
 	public void configure(final SimpleMultiMap multiMapProvider){
+		setConfig(multiMapProvider);
+	}
+	
+	private void setConfig(final SimpleMultiMap multiMapProvider){
 		final Map<String, String> namespaces = multiMapProvider.getMap(NAMESPACES_CONF);
 		if(namespaces==null){
 			throw new MetamorphException("namespaces map is missing");
@@ -62,7 +90,6 @@ public final class JenaWriter implements StreamReceiver {
 	@Override
 	public void startRecord(final String identifier) {
 		currentResource = model.createResource(homePrefix + identifier);
-
 	}
 
 	@Override
