@@ -13,7 +13,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<targetJdk>1.6</targetJdk>
 		<junit.version>4.8.2</junit.version>
-		<org.springframework.version>3.0.5.RELEASE</org.springframework.version>
 	</properties>
 
 	<dependencies>
@@ -22,7 +21,7 @@
 			<artifactId>metamorph</artifactId>
 
 
-			<version>1.1-SNAPSHOT</version>
+			<version>1.2-SNAPSHOT</version>
 
 
 		</dependency>
@@ -30,6 +29,11 @@
 			<groupId>com.hp.hpl.jena</groupId>
 			<artifactId>jena</artifactId>
 			<version>2.6.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.culturegraph</groupId>
+			<artifactId>metastream</artifactId>
+			<version>0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
@@ -87,7 +91,7 @@
 						<artifactId>maven-checkstyle-plugin</artifactId>
 						<version>2.6</version>
 						<configuration>
-							<configLocation>${basedir}/developers/checkstyle_rules.xml</configLocation>
+							<configLocation>${basedir}/quality_assurance/checkstyle_rules.xml</configLocation>
 						</configuration>
 						<executions>
 							<execution>
@@ -145,7 +149,7 @@
 							<linkXRef>true</linkXRef>
 
 							<rulesets>
-								<ruleset>${basedir}/developers/pmd_rules.xml</ruleset>
+								<ruleset>${basedir}/quality_assurance/pmd_rules.xml</ruleset>
 							</rulesets>
 						</configuration>
 
