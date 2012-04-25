@@ -78,8 +78,13 @@ public final class ModelBatcher extends DefaultSender<ObjectReceiver<Model>>
 	}
 
 	@Override
-	public void close() {
-		writer.close();
+	public void doReset() {
+		writer.reset();
+	}
+
+	@Override
+	public void doCloseResources() {
+		writer.closeResources();
 	}
 
 }

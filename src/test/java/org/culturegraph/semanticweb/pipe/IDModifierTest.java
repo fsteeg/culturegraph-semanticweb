@@ -29,7 +29,7 @@ public final class IDModifierTest {
 		decoder.process("1={ name=test, entity={ name=test } }");
 		decoder.process("2={ name=test}");
 		decoder.process(RECORD3);
-		decoder.close();
+		decoder.closeResources();
 				
 		final IdModifier idModifier = new IdModifier();
 		final StreamValidator validator = new StreamValidator(expected.getEvents());
@@ -40,7 +40,7 @@ public final class IDModifierTest {
 		decoder.process("one={ name=test, __ID=1, entity={ name=test } }");
 		decoder.process("two={ name=test, __ID=2}");
 		decoder.process(RECORD3);
-		decoder.close();
+		decoder.closeResources();
 	}
 
 }

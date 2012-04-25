@@ -53,11 +53,6 @@ public final class IdModifier implements StreamReceiverPipe<StreamReceiver> {
 		public void literal(final String name, final String value) {
 			getReceiver().literal(name, value);
 		}
-
-		@Override
-		public void close() {
-			getReceiver().close();
-		}
 		
 	}
 
@@ -107,7 +102,15 @@ public final class IdModifier implements StreamReceiverPipe<StreamReceiver> {
 	}
 
 	@Override
-	public void close() {
-		modifyStream.close();
+	public void reset() {
+		buffer.reset();
+		modifyStream.reset();
 	}
+
+	@Override
+	public void closeResources() {
+		buffer.closeResources();
+		modifyStream.closeResources();
+	}
+	
 }

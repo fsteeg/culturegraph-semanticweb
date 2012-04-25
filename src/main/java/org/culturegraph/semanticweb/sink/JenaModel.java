@@ -82,7 +82,14 @@ public final class JenaModel implements StreamReceiver {
 	}
 
 	@Override
-	public void close() {
+	public void reset() {
+		// TODO: Check that this is the correct behaviour
+		// Nothing to do		
+	}
+	
+	@Override
+	public void closeResources() {
+		// TODO: Check that this is the correct behaviour
 		// Nothing to do
 	}
 
