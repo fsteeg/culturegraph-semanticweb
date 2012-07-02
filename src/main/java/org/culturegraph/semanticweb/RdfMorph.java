@@ -4,13 +4,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+
 import java.io.Writer;
 
 import org.culturegraph.metamorph.stream.readers.MultiFormatReader;
-import org.culturegraph.semanticweb.stream.receiver.JenaWriter;
-import org.culturegraph.semanticweb.stream.receiver.JenaWriter.BatchFinishedListener;
-
-import com.hp.hpl.jena.rdf.model.Model;
+import org.culturegraph.semanticweb.pipe.ModelBatcher;
+import org.culturegraph.semanticweb.sink.RDFWriter;
 
 /**
  * Example which reads mab2, pica and marc21 files and converts them to RDF
@@ -18,33 +17,29 @@ import com.hp.hpl.jena.rdf.model.Model;
  * 
  * @author Markus Michael Geipel
  */
-public final class RdfMorph implements BatchFinishedListener {
+public final class RdfMorph {
 
-	private static final String RDF_XML_ABR = "RDF/XML-ABBREV";
-
-	private final JenaWriter jenaWriter = new JenaWriter();
-	private final Writer out;
+	private static final String NAMESPACES_CONF = "namespaces";
+	
 	private final MultiFormatReader reader;
-
+	private final ModelBatcher modelBatcher;
+	private final RDFWriter rdfWriter;
+	
 	private RdfMorph(final String morphDef) throws UnsupportedEncodingException {
-		out = new OutputStreamWriter(System.out, "UTF8");
-		reader = new MultiFormatReader(morphDef);
-		jenaWriter.setBatchFinishedListener(this);
-
+		reader = new MultiFormatReader(morphDef);		
+		modelBatcher = new ModelBatcher();
+		rdfWriter = new RDFWriter(new OutputStreamWriter(System.out, "UTF8"));
 	}
 
 	private void morph(final String fileName) throws IOException {
-
 		reader.setFormat(getExtention(fileName));
-		reader.setReceiver(jenaWriter);
-		jenaWriter.configure(reader.getMetamorph());
+		reader.setReceiver(modelBatcher);
+		modelBatcher.setReceiver(rdfWriter);
+		
+		modelBatcher.setNamespacePrefixes(reader.getMetamorph().getMap(NAMESPACES_CONF));
+		modelBatcher.setHomePrefix(reader.getMetamorph().getMap(NAMESPACES_CONF).get(""));
+		
 		reader.read(new FileReader(fileName));
-		onBatchFinished(jenaWriter.getModel());
-	}
-
-	@Override
-	public void onBatchFinished(final Model model) {
-		model.write(out, RDF_XML_ABR);
 	}
 
 	/**
