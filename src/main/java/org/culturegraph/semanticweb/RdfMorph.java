@@ -9,7 +9,7 @@ import org.culturegraph.metamorph.core.MetamorphBuilder;
 import org.culturegraph.metamorph.stream.readers.Reader;
 import org.culturegraph.metamorph.stream.readers.ReaderFactory;
 import org.culturegraph.metastream.pipe.RecordBatcher;
-import org.culturegraph.semanticweb.sink.JenaModel;
+import org.culturegraph.semanticweb.pipe.JenaModel;
 import org.culturegraph.semanticweb.sink.RDFWriter;
 import org.culturegraph.semanticweb.sink.RDFWriter.Format;
 
