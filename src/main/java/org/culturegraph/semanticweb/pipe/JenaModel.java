@@ -1,4 +1,4 @@
-package org.culturegraph.semanticweb.sink;
+package org.culturegraph.semanticweb.pipe;
 
 import java.util.HashMap;
 import java.util.Map;
