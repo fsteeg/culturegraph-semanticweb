@@ -48,6 +48,7 @@ public final class RDFWriter implements ObjectReceiver<Model> {
 	@Override
 	public void process(final Model model) {
 		model.write(writer, format.getName());
+	
 	}
 	
 	@Override
