@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 
-import java.io.Writer;
-
 import org.culturegraph.metamorph.stream.readers.MultiFormatReader;
-import org.culturegraph.semanticweb.pipe.ModelBatcher;
+import org.culturegraph.metastream.pipe.RecordBatcher;
+import org.culturegraph.metastream.pipe.RecordBatcher.BatchListener;
+import org.culturegraph.semanticweb.sink.JenaModel;
 import org.culturegraph.semanticweb.sink.RDFWriter;
+import org.culturegraph.semanticweb.sink.RDFWriter.Format;
+
+import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * Example which reads mab2, pica and marc21 files and converts them to RDF
@@ -17,29 +20,26 @@ import org.culturegraph.semanticweb.sink.RDFWriter;
  * 
  * @author Markus Michael Geipel
  */
-public final class RdfMorph {
+public final class RdfMorph implements BatchListener {
 
 	private static final String NAMESPACES_CONF = "namespaces";
 	
 	private final MultiFormatReader reader;
-	private final ModelBatcher modelBatcher;
 	private final RDFWriter rdfWriter;
+	private final JenaModel jenaModel = new JenaModel();
 	
 	private RdfMorph(final String morphDef) throws UnsupportedEncodingException {
 		reader = new MultiFormatReader(morphDef);		
-		modelBatcher = new ModelBatcher();
 		rdfWriter = new RDFWriter(new OutputStreamWriter(System.out, "UTF8"));
+		rdfWriter.setFormat(Format.N3);
 	}
 
 	private void morph(final String fileName) throws IOException {
 		reader.setFormat(getExtention(fileName));
-		reader.setReceiver(modelBatcher);
-		modelBatcher.setReceiver(rdfWriter);
-		
-		modelBatcher.setNamespacePrefixes(reader.getMetamorph().getMap(NAMESPACES_CONF));
-		modelBatcher.setHomePrefix(reader.getMetamorph().getMap(NAMESPACES_CONF).get(""));
-		
+		jenaModel.configure(reader.getMetamorph());
+		reader.setReceiver(new RecordBatcher(this, 2L)).setReceiver(jenaModel);
 		reader.read(new FileReader(fileName));
+		reader.closeResources();
 	}
 
 	/**
@@ -66,4 +66,10 @@ public final class RdfMorph {
 		return fileName.substring(dotPos + 1);
 	}
 
+	@Override
+	public void batchComplete(final RecordBatcher modelBatcher) {
+		final Model model = jenaModel.getModel();
+		rdfWriter.process(model);
+		jenaModel.reset();
+	}
 }
