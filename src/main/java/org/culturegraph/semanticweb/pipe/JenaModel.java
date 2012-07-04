@@ -1,10 +1,11 @@
 package org.culturegraph.semanticweb.pipe;
 
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.Stack;
 
 import org.culturegraph.metastream.MetastreamException;
 import org.culturegraph.metastream.framework.ObjectReceiver;
@@ -31,7 +32,7 @@ public final class JenaModel implements StreamReceiver, Sender<ObjectReceiver<Mo
 	private static final String HTTP = "http://";
 
 	private final Model model;
-	private final Stack<Resource> resources = new Stack<Resource>();
+	private final Deque<Resource> resources = new LinkedList<Resource>();
 
 	private String homePrefix;
 
