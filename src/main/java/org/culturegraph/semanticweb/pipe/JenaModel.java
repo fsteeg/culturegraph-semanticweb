@@ -1,5 +1,6 @@
 package org.culturegraph.semanticweb.pipe;
 
+import java.io.Reader;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -26,7 +27,9 @@ import com.hp.hpl.jena.rdf.model.Resource;
  * @author Markus Michael Geipel, Christoph Böhme
  * 
  */
-public final class JenaModel implements StreamReceiver, Sender<ObjectReceiver<Model>>, BatchListener {
+public final class JenaModel implements StreamReceiver, ObjectReceiver<Reader>,
+		Sender<ObjectReceiver<Model>>, BatchListener {
+	
 	public static final String NAMESPACES_CONF = "namespaces";
 
 	private static final String HTTP = "http://";
@@ -35,7 +38,7 @@ public final class JenaModel implements StreamReceiver, Sender<ObjectReceiver<Mo
 	private final Deque<Resource> resources = new LinkedList<Resource>();
 
 	private String homePrefix;
-
+	
 	private ObjectReceiver<Model> receiver;
 
 	public JenaModel() {
@@ -44,20 +47,6 @@ public final class JenaModel implements StreamReceiver, Sender<ObjectReceiver<Mo
 
 	public JenaModel(final Model model) {
 		this.model = model;
-	}
-
-	public void configure(final SimpleMultiMap multiMap) {
-		setNamespacePrefixes(multiMap.getMap(NAMESPACES_CONF));
-		setHomePrefix(multiMap.getMap(NAMESPACES_CONF).get(""));
-	}
-
-	public void configure(final Properties properties) {
-		final Map<String, String> map = new HashMap<String, String>();
-		for (Entry<Object, Object> entry : properties.entrySet()) {
-			map.put(entry.getKey().toString(), entry.getValue().toString());
-		}
-		setNamespacePrefixes(map);
-		setHomePrefix(properties.get("").toString());
 	}
 
 	public void setNamespacePrefixes(final Map<String, String> namespaces) {
@@ -78,6 +67,26 @@ public final class JenaModel implements StreamReceiver, Sender<ObjectReceiver<Mo
 
 	public Model getModel() {
 		return model;
+	}
+
+	public void configure(final SimpleMultiMap multiMap) {
+		setNamespacePrefixes(multiMap.getMap(NAMESPACES_CONF));
+		setHomePrefix(multiMap.getMap(NAMESPACES_CONF).get(""));
+	}
+
+	public void configure(final Properties properties) {
+		final Map<String, String> map = new HashMap<String, String>();
+		for (Entry<Object, Object> entry : properties.entrySet()) {
+			map.put(entry.getKey().toString(), entry.getValue().toString());
+		}
+		setNamespacePrefixes(map);
+		setHomePrefix(properties.get("").toString());
+	}
+
+	@Override
+	public <R extends ObjectReceiver<Model>> R setReceiver(final R receiver) {
+		this.receiver = receiver;
+		return receiver;
 	}
 
 	@Override
@@ -105,6 +114,12 @@ public final class JenaModel implements StreamReceiver, Sender<ObjectReceiver<Mo
 	@Override
 	public void literal(final String name, final String value) {
 		addProperty(resources.peek(), name, value);
+	}
+	
+	@Override
+	public void process(final Reader reader) {
+		// TODO: Handle different RDF serializations
+		model.read(reader, homePrefix);  // TODO: Check, whether it is correct to use home prefix here		
 	}
 
 	@Override
@@ -155,12 +170,6 @@ public final class JenaModel implements StreamReceiver, Sender<ObjectReceiver<Mo
 		receiver.process(model);
 		model.removeAll();
 
-	}
-
-	@Override
-	public <R extends ObjectReceiver<Model>> R setReceiver(final R receiver) {
-		this.receiver = receiver;
-		return receiver;
 	}
 
 }
