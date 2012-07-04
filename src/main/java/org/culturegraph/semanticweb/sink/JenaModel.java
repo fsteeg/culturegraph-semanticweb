@@ -1,10 +1,14 @@
 package org.culturegraph.semanticweb.sink;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.Stack;
 
 import org.culturegraph.metastream.MetastreamException;
 import org.culturegraph.metastream.framework.StreamReceiver;
+import org.culturegraph.util.SimpleMultiMap;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
@@ -18,9 +22,10 @@ import com.hp.hpl.jena.rdf.model.Resource;
  *
  */
 public final class JenaModel implements StreamReceiver {
-	
+	public static final String NAMESPACES_CONF = "namespaces";
+
 	private static final String HTTP = "http://";
-	
+
 	private final Model model;
 	private final Stack<Resource> resources = new Stack<Resource>();
 
@@ -32,6 +37,22 @@ public final class JenaModel implements StreamReceiver {
 	
 	public JenaModel(final Model model) {
 		this.model = model;
+	}
+	
+	
+	
+	public void configure(final SimpleMultiMap multiMap){
+		setNamespacePrefixes(multiMap.getMap(NAMESPACES_CONF));
+		setHomePrefix(multiMap.getMap(NAMESPACES_CONF).get(""));
+	}
+	
+	public void configure(final Properties properties){
+		final Map<String, String> map = new HashMap<String, String>();
+		for (Entry<Object, Object> entry : properties.entrySet()) {
+			map.put(entry.getKey().toString(), entry.getValue().toString());
+		}
+		setNamespacePrefixes(map);
+		setHomePrefix(properties.get("").toString());
 	}
 
 	public void setNamespacePrefixes(final Map<String, String> namespaces) {
@@ -83,14 +104,13 @@ public final class JenaModel implements StreamReceiver {
 
 	@Override
 	public void reset() {
-		// TODO: Check that this is the correct behaviour
-		// Nothing to do		
+		model.removeAll();	
 	}
 	
 	@Override
 	public void closeResources() {
-		// TODO: Check that this is the correct behaviour
-		// Nothing to do
+		
+		model.close();
 	}
 
 	private void addProperty(final Resource resource, final String name, final String value) {

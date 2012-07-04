@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metamorph xmlns="http://www.culturegraph.org/metamorph"
+	version="1" entityMarker=".">
+	<meta>
+		<name>Umsetzung der PND</name>
+	</meta>
+	<rules>
+		<group name="rdaGr2:identifierForThePerson">
+			<data source="007Q.0">
+				<compose prefix="(DE-588c)" />
+			</data>
+			<data source="007T.0">
+				<compose prefix="(DLC)" />
+			</data>
+			<data source="003@.0">
+				<compose prefix="(DE-588a)" />
+			</data>
+		</group>
+
+		<group name="gnd:invalidIdentifierForThePerson">
+			<data source="007G.0" />
+			<data source="007Hm.0">
+				<compose prefix="(DE-101c)" />
+			</data>
+		</group>
+
+		<entity name="gnd:variantNameForThePerson"
+			flushWith="028A">
+			<data name="gnd:personalName" source="028A.5" />
+			<data name="gnd:surname" source="028A.a" />
+			<data name="gnd:forename" source="028A.d" />
+			<data name="gnd:prefix" source="028A.c" />
+			<data name="gnd:qualifier" source="028A.l" />
+		</entity>
+
+
+		<combine name="gnd:preferredName"
+			value="${surname}${forename}${prefix}${personalname}${qualifier}"
+			flushWith="028A">
+			<data source="028A.a" name="surname" />
+			<data source="028A.d" name="forename">
+				<compose prefix=", " />
+			</data>
+			<data source="028A.c" name="prefix">
+				<compose prefix=" " />
+			</data>
+			<data source="028A.l" name="qualifier">
+				<compose prefix=" &lt;" postfix="&gt;" />
+			</data>
+			<data source="028A.5" name="personalname" />
+		</combine>
+
+		<combine name="gnd:variantNameForThePerson"
+			value="${surname}${forename}${prefix}${personalname}${qualifier}"
+			flushWith="028@">
+			<data source="028@.a" name="surname" />
+			<data source="028@.d" name="forename">
+				<compose prefix=", " />
+			</data>
+			<data source="028@.c" name="prefix">
+				<compose prefix=" " />
+			</data>
+			<data source="028@.l" name="qualifier">
+				<compose prefix=" &lt;" postfix="&gt;" />
+			</data>
+			<data source="028@.5" name="personalname" />
+		</combine>
+
+		<data name="rdaGr2:dateOfBirth" source="032Aa.a">
+			<replace pattern=" " with="" />
+			<regexp match="((\d*?))-" format="${1}" />
+		</data>
+
+		<data name="rdaGr2:dateOfDeath" source="032Aa.a">
+			<replace pattern=" " with="" />
+			<regexp match="-((\d*?))$" format="${1}" />
+		</data>
+
+		<group name="rdaGr2:periodOfActivityOfThePerson">
+			<data source="032Ab.a" />
+			<data source="032Ac.a" />
+			<data source="032Ae.a" />
+		</group>
+
+
+		<data source="032Ba.a" name="rdaGr2:placeOfBirth" />
+		<data source="032Bd.a" name="rdaGr2:placeOfDeath" />
+		<group name="rdaGr2:placeOfResidence">
+			<data source="032Be.a" />
+			<data source="032Bf.a" />
+		</group>
+		<data source="032Bq.a" name="rdaGr2:titleOfThePerson" />
+		<data source="032Bt.a" name="gnd:academicTitleOfThePerson" />
+		<data source="032Bu.a" name="rdaGr2:biographicalInformation" />
+		<data source="032Bw.a" name="rdaGr2:gender" />
+		<data source="032Bz.a" name="gnd:studyPathsOfThePerson" />
+
+		<data source="032Fa.9" name="rdaGr2:professionOrOccupation">
+			<compose prefix="http://d-nb.info/gnd/" />
+		</data>
+
+		<data name="rdaRelGr2:relatedCorporateBodyPerson" source="038C.9" />
+		<data name="foaf:homepage" source="009Q.u" />
+		<data name="gnd:countryCodeForThePerson" source="042B.a" />
+		<data name="rdaGr2:languageOfThePerson" source="042C.a" />
+		<data name="owl:sameAs" source="039I.9" />
+		<data name="gnd:publicationOfThePerson" source="046G.a" />
+	</rules>
+	<maps>
+		<map name="namespaces">
+			<entry name="" value="http://d-nb.info/gnd/" />
+			<entry name="gnd" value="http://d-nb.info/gnd/" />
+			<entry name="rdaGr2" value="http://RDVocab.info/ElementsGr2/" />
+			<entry name="foaf" value="http://xmlns.com/foaf/0.1/" />
+			<entry name="owl" value="http://www.w3.org/2002/07/owl#" />
+		</map>
+	</maps>
+</metamorph>
