@@ -12,7 +12,7 @@ import com.hp.hpl.jena.rdf.model.Model;
  * @author Christoph Böhme <c.boehme@dnb.de>
  *
  */
-public final class RDFWriter implements ObjectReceiver<Model> {
+public final class RdfWriter implements ObjectReceiver<Model> {
 
 	public static enum Format {
 		RDF_XML("RDF/XML"), RDF_XML_ABBREV("RDF/XML-ABBREV"), 
@@ -27,13 +27,13 @@ public final class RDFWriter implements ObjectReceiver<Model> {
 		public String getName() {
 			return name;
 		}
-	};
+	}
 
 	private final Writer writer;
 	
 	private Format format = Format.RDF_XML;
 	
-	public RDFWriter(final Writer writer) {
+	public RdfWriter(final Writer writer) {
 		this.writer = writer;
 	}
 
