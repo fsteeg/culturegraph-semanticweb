@@ -123,20 +123,20 @@ public final class JenaModel implements StreamReceiver, ObjectReceiver<Reader>,
 	}
 
 	@Override
-	public void reset() {
+	public void resetStream() {
 		model.removeAll();
 		if (null != receiver) {
-			receiver.reset();
+			receiver.resetStream();
 		}
 	}
 
 	@Override
-	public void closeResources() {
+	public void closeStream() {
 		if (null != receiver) {
 			if (!model.isEmpty()) {
 				receiver.process(model);
 			}
-			receiver.closeResources();
+			receiver.closeStream();
 		}
 		model.close();
 	}

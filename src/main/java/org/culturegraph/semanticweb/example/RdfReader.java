@@ -8,7 +8,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.culturegraph.metastream.sink.StreamWriter;
-import org.culturegraph.metastream.source.HTTPGetter;
+import org.culturegraph.metastream.source.HttpGetter;
 import org.culturegraph.semanticweb.pipe.JenaModel;
 import org.culturegraph.semanticweb.pipe.JenaModelToStream;
 
@@ -30,7 +30,7 @@ public final class RdfReader {
 			url = args[0];
 		}
 		
-		final HTTPGetter httpGetter = new HTTPGetter();
+		final HttpGetter httpGetter = new HttpGetter();
 		final JenaModel jenaModel = new JenaModel();
 		final JenaModelToStream modelToStream = new JenaModelToStream();
 		final StreamWriter streamWriter = new StreamWriter(new OutputStreamWriter(System.out));
@@ -40,8 +40,8 @@ public final class RdfReader {
 				.setReceiver(modelToStream)
 				.setReceiver(streamWriter);
 		
-		httpGetter.process(new URI(url));
-		httpGetter.closeResources();
+		httpGetter.process(url);
+		httpGetter.closeStream();
 	}
 	
 }
