@@ -46,7 +46,7 @@ public final class RdfMorph {
 				.setReceiver(rdfWriter);
 		
 		reader.read(new FileReader(args[0]));
-		reader.closeResources();
+		reader.closeStream();
 
 	}
 

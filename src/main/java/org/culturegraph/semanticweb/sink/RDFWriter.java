@@ -52,12 +52,12 @@ public final class RDFWriter implements ObjectReceiver<Model> {
 	}
 	
 	@Override
-	public void reset() {
+	public void resetStream() {
 		throw new UnsupportedOperationException("Cannot reset RDFWriter");
 	}
 	
 	@Override
-	public void closeResources() {
+	public void closeStream() {
 		try {
 			writer.close();
 		} catch (IOException e) {
