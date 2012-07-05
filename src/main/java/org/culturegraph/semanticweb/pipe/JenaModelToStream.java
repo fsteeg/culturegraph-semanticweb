@@ -1,7 +1,6 @@
 package org.culturegraph.semanticweb.pipe;
 
-import org.culturegraph.metastream.framework.DefaultSender;
-import org.culturegraph.metastream.framework.ObjectReceiver;
+import org.culturegraph.metastream.framework.DefaultObjectPipe;
 import org.culturegraph.metastream.framework.StreamReceiver;
 import org.culturegraph.util.MakeIterable;
 
@@ -10,8 +9,8 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 
-public final class JenaModelToStream extends DefaultSender<StreamReceiver>
-		implements ObjectReceiver<Model> {
+public final class JenaModelToStream 
+		extends DefaultObjectPipe<Model, StreamReceiver> {
 
 	@Override
 	public void process(final Model model) {
