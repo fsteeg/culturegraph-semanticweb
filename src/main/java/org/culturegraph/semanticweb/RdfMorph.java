@@ -12,7 +12,7 @@ import org.culturegraph.metamorph.reader.ReaderFactory;
 import org.culturegraph.metastream.pipe.RecordBatcher;
 import org.culturegraph.semanticweb.pipe.JenaModel;
 import org.culturegraph.semanticweb.sink.RdfWriter;
-import org.culturegraph.semanticweb.sink.RdfWriter.Format;
+import org.culturegraph.semanticweb.sink.AbstractRdfWriter.Format;
 
 /**
  * Example which reads mab2, pica and marc21 files and converts them to RDF
