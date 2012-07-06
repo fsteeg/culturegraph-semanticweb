@@ -1,24 +1,27 @@
 package org.culturegraph.semanticweb.sink;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
 import org.culturegraph.metastream.MetastreamException;
 
 /**
- * @author Christoph Böhme <c.boehme@dnb.de>
+ * @author Markus Geipel
  *
  */
-public final class RdfWriter extends AbstractRdfWriter {
+public final class RdfFileWriter extends AbstractRdfWriter {
 
 	
 
-	private final Writer writer;
+	private FileWriter writer;
+	private int count;
+	private final String filePrefix;
 	
 	
-	public RdfWriter(final Writer writer) {
+	public RdfFileWriter(final String filePrefix) {
 		super();
-		this.writer = writer;
+		this.filePrefix = filePrefix;
 	}
 
 	
@@ -38,9 +41,17 @@ public final class RdfWriter extends AbstractRdfWriter {
 	}
 
 
+
+
+
 	@Override
 	protected Writer getWriter() {
+		final String file = String.format(filePrefix + "%2$03d", Integer.valueOf(++count));
+		try {
+			writer = new FileWriter(file);
+		} catch (IOException e) {
+			throw new MetastreamException("faile to open '" + file + "'.", e);
+		}
 		return writer;
 	}
-
 }
