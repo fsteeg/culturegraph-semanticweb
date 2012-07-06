@@ -4,11 +4,10 @@
 package org.culturegraph.semanticweb.example;
 
 import java.io.OutputStreamWriter;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.culturegraph.metastream.sink.StreamWriter;
-import org.culturegraph.metastream.source.HttpGetter;
+import org.culturegraph.metastream.source.HttpOpener;
 import org.culturegraph.semanticweb.pipe.JenaModel;
 import org.culturegraph.semanticweb.pipe.JenaModelToStream;
 
@@ -30,18 +29,18 @@ public final class RdfReader {
 			url = args[0];
 		}
 		
-		final HttpGetter httpGetter = new HttpGetter();
+		final HttpOpener httpOpener = new HttpOpener();
 		final JenaModel jenaModel = new JenaModel();
 		final JenaModelToStream modelToStream = new JenaModelToStream();
 		final StreamWriter streamWriter = new StreamWriter(new OutputStreamWriter(System.out));
 		
-		httpGetter
+		httpOpener
 				.setReceiver(jenaModel)
 				.setReceiver(modelToStream)
 				.setReceiver(streamWriter);
 		
-		httpGetter.process(url);
-		httpGetter.closeStream();
+		httpOpener.process(url);
+		httpOpener.closeStream();
 	}
 	
 }
