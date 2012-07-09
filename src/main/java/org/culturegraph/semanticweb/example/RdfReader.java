@@ -23,12 +23,13 @@ public final class RdfReader {
 		// Nothing to do
 	}
 	
-	public static void main(final String[] args) throws URISyntaxException  {
+	public static void main(final String[] args)  {
 		String url = EXAMPLE_URL;
 		if (args.length >= 1) {
 			url = args[0];
 		}
 		
+
 		final HttpOpener httpOpener = new HttpOpener();
 		final JenaModel jenaModel = new JenaModel();
 		final JenaModelToStream modelToStream = new JenaModelToStream();

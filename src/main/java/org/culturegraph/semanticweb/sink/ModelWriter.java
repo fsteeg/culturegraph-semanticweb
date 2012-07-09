@@ -9,14 +9,14 @@ import org.culturegraph.metastream.MetastreamException;
  * @author Christoph Böhme <c.boehme@dnb.de>
  *
  */
-public final class RdfWriter extends AbstractRdfWriter {
+public final class ModelWriter extends AbstractModelWriter {
 
 	
 
 	private final Writer writer;
 	
 	
-	public RdfWriter(final Writer writer) {
+	public ModelWriter(final Writer writer) {
 		super();
 		this.writer = writer;
 	}

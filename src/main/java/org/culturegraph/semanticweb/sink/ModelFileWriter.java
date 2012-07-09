@@ -5,21 +5,30 @@ import java.io.IOException;
 import java.io.Writer;
 
 import org.culturegraph.metastream.MetastreamException;
+import org.culturegraph.metastream.annotation.Description;
+import org.culturegraph.metastream.annotation.In;
+
+import com.hp.hpl.jena.rdf.model.Model;
 
 /**
  * @author Markus Geipel
  *
  */
-public final class RdfFileWriter extends AbstractRdfWriter {
 
-	
+@Description("writes Jena models to RDF files.")
+@In(Model.class)
+public final class ModelFileWriter extends AbstractModelWriter {
 
 	private FileWriter writer;
 	private int count;
 	private final String filePrefix;
 	
+	public ModelFileWriter() {
+		super();
+		this.filePrefix = "";
+	}
 	
-	public RdfFileWriter(final String filePrefix) {
+	public ModelFileWriter(final String filePrefix) {
 		super();
 		this.filePrefix = filePrefix;
 	}

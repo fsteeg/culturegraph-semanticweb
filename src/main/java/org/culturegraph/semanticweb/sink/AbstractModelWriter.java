@@ -10,7 +10,7 @@ import com.hp.hpl.jena.rdf.model.Model;
  * @author Christoph Böhme <c.boehme@dnb.de>, Markus Geipel
  *
  */
-public abstract class AbstractRdfWriter implements ObjectReceiver<Model> {
+public abstract class AbstractModelWriter implements ObjectReceiver<Model> {
 
 	public static enum Format {
 		RDF_XML("RDF/XML"), RDF_XML_ABBREV("RDF/XML-ABBREV"), 
