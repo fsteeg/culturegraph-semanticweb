@@ -84,7 +84,7 @@
 
 	<profiles>
 		<profile>
-			<id>jenkins</id>
+			<id>hudson</id>
 			<activation>
 				<property>
 					<name>BUILD_NUMBER</name>

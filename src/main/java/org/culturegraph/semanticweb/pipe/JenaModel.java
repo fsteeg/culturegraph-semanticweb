@@ -9,6 +9,9 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.culturegraph.metastream.MetastreamException;
+import org.culturegraph.metastream.annotation.Description;
+import org.culturegraph.metastream.annotation.In;
+import org.culturegraph.metastream.annotation.Out;
 import org.culturegraph.metastream.framework.ObjectReceiver;
 import org.culturegraph.metastream.framework.Sender;
 import org.culturegraph.metastream.framework.StreamReceiver;
@@ -27,6 +30,9 @@ import com.hp.hpl.jena.rdf.model.Resource;
  * @author Markus Michael Geipel, Christoph Böhme
  * 
  */
+@Description("writes stream to Jena model")
+@In(StreamReceiver.class)
+@Out(Model.class)
 public final class JenaModel implements StreamReceiver, ObjectReceiver<Reader>,
 		Sender<ObjectReceiver<Model>>, BatchListener {
 	
