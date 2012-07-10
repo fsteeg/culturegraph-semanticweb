@@ -4,8 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import org.culturegraph.metamorph.reader.MultiFormatReader;
-import org.culturegraph.metamorph.reader.Reader;
+import org.culturegraph.metastream.reader.MultiFormatReader;
+import org.culturegraph.metastream.reader.Reader;
 import org.culturegraph.semanticweb.pipe.StreamToModel;
 import org.culturegraph.semanticweb.sink.AbstractModelWriter.Format;
 import org.culturegraph.semanticweb.sink.ModelWriter;
