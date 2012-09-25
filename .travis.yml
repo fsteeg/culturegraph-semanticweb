@@ -1,0 +1,11 @@
+language: java
+jdk: openjdk6
+before_install:
+  - git clone git://github.com/fsteeg/culturegraph-metastream.git
+  - cd culturegraph-metastream
+  - mvn clean install -DskipTests=true
+  - cd ..
+  - git clone git://github.com/fsteeg/culturegraph-metamorph.git
+  - cd culturegraph-metamorph
+  - mvn clean install -DskipTests=true
+  - cd ..
