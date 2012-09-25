@@ -1,0 +1,11 @@
+h1. About
+
+This is a mirror of the repo at "http://culturegraph.svn.sourceforge.net/viewvc/culturegraph/semanticweb":http://culturegraph.svn.sourceforge.net/viewvc/culturegraph/semanticweb
+
+h1. Build
+
+"!https://secure.travis-ci.org/fsteeg/culturegraph-semanticweb.png!":http://travis-ci.org/fsteeg/culturegraph-semanticweb
+
+h1. License
+
+Apache License, Version 2.0: "http://www.apache.org/licenses/LICENSE-2.0.html":http://www.apache.org/licenses/LICENSE-2.0.html
