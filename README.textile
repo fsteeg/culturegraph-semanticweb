@@ -1,0 +1,11 @@
+h1. About
+
+This is a mirror of the repo at "https://svn.code.sf.net/p/culturegraph/code/semanticweb/":https://svn.code.sf.net/p/culturegraph/code/semanticweb
+
+h1. Build
+
+"!https://travis-ci.org/culturegraph/culturegraph-semanticweb.png?branch=integration!":http://travis-ci.org/culturegraph/culturegraph-semanticweb
+
+h1. License
+
+Apache License, Version 2.0: "http://www.apache.org/licenses/LICENSE-2.0.html":http://www.apache.org/licenses/LICENSE-2.0.html
